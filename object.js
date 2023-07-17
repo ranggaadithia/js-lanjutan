@@ -121,28 +121,95 @@
 
 // versi class
 
-class Mahasiswa {
-  constructor(nama, energi) {
-    this.nama = nama;
-    this.energi = energi;
+// class Mahasiswa {
+//   constructor(nama, energi) {
+//     this.nama = nama;
+//     this.energi = energi;
+//   }
+
+//   makan (porsi) {
+//     this.energi += porsi;
+//     return this.energi
+//   }
+  
+//   main (jam) {
+//     this.energi -= jam;
+//     return this.energi
+//   }
+  
+//   tidur (jam) {
+//     this.energi += jam * 2;
+//     return this.energi
+//   }
+
+// }
+
+
+// let rangga = new Mahasiswa("Rangga", 10)
+
+
+// class EmployeeManagement {
+//   constructor() {
+//     this.employees = []
+//   }
+
+//   addEmployee(name, salary) {
+//     const employee = {
+//       name: name,
+//       salary: salary
+//     }
+//     this.employees.push(employee)
+//   }
+
+//   getEmployeeList(){
+//     let employeeList = "";
+//     for (let i = 0; i < this.employees.length; i++) {
+//       employeeList += this.employees[i].name;
+//     }
+//     return employeeList;
+//   }
+// }
+
+// const employeeManagement = new EmployeeManagement();
+
+// employeeManagement.addEmployee("rangga", 100)
+// console.log(employeeManagement.getEmployeeList());
+
+
+class StudentManagement {
+  constructor() {
+    this.students = [];
+    this.currentID = 1;
   }
 
-  makan (porsi) {
-    this.energi += porsi;
-    return this.energi
+  addStudent(name, grade, sp){
+
+    const student = {
+      id: this.currentID,
+      name: name,
+      grade: grade,
+      sp: sp,
+    }
+
+    this.students.push(student)
+    this.currentID++;
   }
-  
-  main (jam) {
-    this.energi -= jam;
-    return this.energi
+
+  getStudentsList() {
+    let listStudents = "";
+    for (let i = 0; i < this.students.length; i++) {
+      listStudents += this.students[i].name + "\n"
+    }
+    return listStudents;
   }
-  
-  tidur (jam) {
-    this.energi += jam * 2;
-    return this.energi
-  }
+
 
 }
 
+const studentManagement = new StudentManagement();
+studentManagement.addStudent("Rangga", 3.75, "Computer Science");
+studentManagement.addStudent("Adithia", 3.15, "Kedokteran");
+studentManagement.addStudent("Putra", 3.00, "Law");
+studentManagement.addStudent("Agus", 3.10, "Japanese Languages");
 
-let rangga = new Mahasiswa("Rangga", 10)
+console.log(studentManagement.students);
