@@ -1,35 +1,83 @@
-$('.search-button').on('click', function() {
-  $.ajax({
-    url: 'http://www.omdbapi.com/?apikey=35246643&s=' + $('.input-keyword').val(),
-    success: result => {
-      const movies = result.Search
+// $('.search-button').on('click', function() {
+//   $.ajax({
+//     url: 'http://www.omdbapi.com/?apikey=35246643&s=' + $('.input-keyword').val(),
+//     success: result => {
+//       const movies = result.Search
   
+//       let movieCards = '';
+  
+//       movies.forEach(movie => {
+//         movieCards += showMovieCards(movie);
+//       })
+  
+//       $(".movies-row").html(movieCards)
+  
+//       $('.modal-detail-button').on('click', function() {
+//         $.ajax({
+//           url: `http://www.omdbapi.com/?apikey=35246643&i=${$(this).data('imdbid')}`,
+//           success: movie => {
+//             const movieModal = showMovieDetails(movie);
+//             $('.modal-movie').html(movieModal)    
+//           },
+//           error: (e) => {
+//             console.log(e.responseText);
+//           }
+//         })
+//       })
+  
+//     }, 
+//     error: (e) => {
+//       console.log(e.responseText)
+//     }
+//   })
+// })
+
+
+
+
+
+
+const searchButton = document.querySelector(".search-button")
+
+searchButton.addEventListener('click', function() {
+  const inputKeyword = document.querySelector('.input-keyword')
+
+  fetch('http://www.omdbapi.com/?apikey=35246643&s=' + inputKeyword.value)
+    .then(response => response.json())
+    .then(response => {
+      const movies = response.Search
+
       let movieCards = '';
+
+      movies.forEach(movie => movieCards += showMovieCards(movie))
+
+      const movieContainer = document.querySelector('.movies-container')
+
+      movieContainer.innerHTML = movieCards
+
+      // modal details
+      const detailButtons = document.querySelectorAll('.modal-detail-button')
+
+
+      detailButtons.forEach(detailButton => {
+        detailButton.addEventListener('click', function() {
+          const imdbID = this.dataset.imdbid
+          fetch('http://www.omdbapi.com/?apikey=35246643&i=' + imdbID)
+            .then(response => response.json())
+            .then(response => {
+              const modalBody = document.querySelector('.modal-body')
   
-      movies.forEach(movie => {
-        movieCards += showMovieCards(movie);
-      })
-  
-      $(".movies-row").html(movieCards)
-  
-      $('.modal-detail-button').on('click', function() {
-        $.ajax({
-          url: `http://www.omdbapi.com/?apikey=35246643&i=${$(this).data('imdbid')}`,
-          success: movie => {
-            const movieModal = showMovieDetails(movie);
-            $('.modal-movie').html(movieModal)    
-          },
-          error: (e) => {
-            console.log(e.responseText);
-          }
+              let movieDetail = showMovieDetails(response)
+              
+              modalBody.innerHTML = movieDetail
+              
+            })
         })
       })
-  
-    }, 
-    error: (e) => {
-      console.log(e.responseText)
-    }
-  })
+
+      
+    })
+    .catch(error => console.log(error))
 })
 
 
